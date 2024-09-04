@@ -1,6 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-
+//Pyöritin tätä kaverin kanssa ja vaihtelimme eri osia ja testasimme miten mikäkin toimii.
+//Käytin antamaasi example tiedostoa, koska koin sen aluksi helpommaksi.
 <head>
     <!-- meta tag is used to define the character set, viewport, http-equiv etc. -->
     <meta charset="utf-8">

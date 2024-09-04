@@ -42,3 +42,7 @@ eyeColor:"blue"
 };
 console.log(person.age);
 
+/* Ps: vaihdoin juuri uuteen koneeseen ja unohdin tallentaa tiedoston joten tässä on kaikki mitä kokeilin workshopista ja pyörittelin niitä kaverin kanssa.
+
+
+*/

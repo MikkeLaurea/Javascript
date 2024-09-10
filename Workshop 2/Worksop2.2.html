@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    
+</head>
+<body>
+ <script>    
+     function checkIfStudent() {
+        var isStudent = confirm("Are you a student?");
+        if (isStudent) {
+            document.getElementById("message").innerHTML = "Welcome student";
+        } else {
+            document.getElementById("message").innerHTML = "Sorry, this page is for students only";
+            }
+        }
+     window.onload = checkIfStudent;
+
+    </script>
+
+<div id="message"></div>
+</body>
+</html>

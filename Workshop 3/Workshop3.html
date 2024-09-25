@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercises</title>
+</head>
+<body>
+
+    <h1>Exercise 1</h1>
+
+    <button id="alertButton">Click me</button>
+    <button id="tableButton">Show table</button>
+    <button id="geoButton">Geolocation</button>
+
+    <p id="message"></p>
+
+    <h1 id="exercise2">Exercise 2</h1>
+
+    <div id="exercise3">
+        <h1>Exercise 3</h1>
+        <form id="textForm">
+            <textarea id="textdata" rows="4" cols="30"></textarea>
+            <br>
+            <button type="button" id="formButton">Send me</button>
+            <p id="keypressCount"></p>
+        </form>
+    </div>
+
+    <div id="exercise4">
+        <h1>Exercise 4</h1>
+        <div id="mouseArea" style="width:300px; height:300px; background-color:lightgray;">
+            Move your mouse here
+        </div>
+        <h2 id="coords"></h2>
+    </div>
+
+    <script>
+       
+        document.getElementById("alertButton").onclick = function() {
+            let currentDate = new Date();
+            alert("You clicked me!");
+            document.getElementById("message").innerText = "You clicked me on " + currentDate;
+        };
+
+       
+        document.getElementById("tableButton").onclick = function() {
+            showTable();
+        };
+
+        function showTable() {
+            document.write(`
+                <table border="1">
+                    <tr>
+                        <th>Name</th>
+                        <th>Position</th>
+                        <th>Salary</th>
+                    </tr>
+                    <tr>
+                        <td>Tiger Nixon</td>
+                        <td>System Architect</td>
+                        <td>$320,800</td>
+                    </tr>
+                    <tr>
+                        <td>Garrett Winters</td>
+                        <td>Accountant</td>
+                        <td>$170,750</td>
+                    </tr>
+                    <tr>
+                        <td>Ashton Cox</td>
+                        <td>Junior Technical Author</td>
+                        <td>$86,000</td>
+                    </tr>
+                    <tr>
+                        <td>Cedric Kelly</td>
+                        <td>Senior Javascript Developer</td>
+                        <td>$433,060</td>
+                    </tr>
+                    <tr>
+                        <td>Airi Satou</td>
+                        <td>Accountant</td>
+                        <td>$162,700</td>
+                    </tr>
+                </table>
+            `);
+        }
+
+       
+        document.getElementById("geoButton").onclick = function() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                document.getElementById("message").innerText = "Geolocation is not supported by this browser.";
+            }
+        };
+
+        function showPosition(position) {
+            let lat = position.coords.latitude;
+            let lon = position.coords.longitude;
+            document.getElementById("message").innerText = "Latitude: " + lat + " Longitude: " + lon;
+            console.log("Latitude: " + lat + " Longitude: " + lon);
+        }
+
+        function showError(error) {
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    document.getElementById("message").innerText = "User denied the request for Geolocation.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    document.getElementById("message").innerText = "Location information is unavailable.";
+                    break;
+                case error.TIMEOUT:
+                    document.getElementById("message").innerText = "The request to get user location timed out.";
+                    break;
+                case error.UNKNOWN_ERROR:
+                    document.getElementById("message").innerText = "An unknown error occurred.";
+                    break;
+            }
+        }
+
+        
+        const exercise2Heading = document.getElementById("exercise2");
+
+        exercise2Heading.onmouseover = function() {
+            console.log("Stepped over by a mouse!");
+        };
+
+        exercise2Heading.onmouseout = function() {
+            alert("Bye bye mouse!");
+        };
+
+        
+        const textarea = document.getElementById("textdata");
+
+      
+        textarea.onfocus = function() {
+            textarea.style.backgroundColor = "yellow";
+            alert("Please fill in the form with proper data.");
+        };
+
+        
+        let count = 0;
+        textarea.onkeydown = function() {
+            count++;
+            document.getElementById("keypressCount").innerText = "Keypresses: " + count;
+        };
+
+       
+        document.getElementById("formButton").onclick = function() {
+            if (textarea.value === "") {
+                alert("The textarea is empty. Please fill it in.");
+            } else {
+                alert("Form submitted!");
+            }
+        };
+
+        
+        const mouseArea = document.getElementById("mouseArea");
+
+        mouseArea.onmousemove = function(event) {
+            const x = event.clientX;
+            const y = event.clientY;
+            document.getElementById("coords").innerHTML = "X: " + x + " Y: " + y;
+            console.log("Mouse coordinates: X = " + x + ", Y = " + y);
+        };
+
+    </script>
+
+</body>
+</html>

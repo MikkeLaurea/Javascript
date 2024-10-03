@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM Traversing</title>
+</head>
+<body>
+
+    <div id="me">I am the element with ID 'me'</div>
+    <div class="surprise">Surprise element 1</div>
+    <div class="surprise">Surprise element 2</div>
+
+
+    <label><input type="checkbox" id="hideMeCheckbox" onchange="hideMe()"> Hide me</label><br>
+    <label><input type="checkbox" id="showMeCheckbox" onchange="showMe()"> Show me</label><br>
+    <label><input type="checkbox" id="surpriseCheckbox" onchange="surpriseMe()"> Surprise</label>
+
+    <script>
+     
+        function hideMe() {
+            document.getElementById('me').style.display = 'none';
+        }
+
+     
+        function showMe() {
+            document.getElementById('me').style.display = 'block';
+        }
+
+       
+        function surpriseMe() {
+            const surpriseElements = document.getElementsByClassName('surprise');
+            for (let i = 0; i < surpriseElements.length; i++) {
+                surpriseElements[i].style.fontSize = '20px';
+            }
+        }
+    </script>
+
+</body>
+</html>

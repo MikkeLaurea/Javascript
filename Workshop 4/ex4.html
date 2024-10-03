@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moving Things</title>
+    <style>
+        #carimage {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+
+    <img id="carimage" src="https://via.placeholder.com/300">
+    
+    <button onclick="moveCar()">Move</button>
+    <button onclick="doMove()">Animate</button>
+    <button onclick="fadeOut()">Fade Out</button>
+    <button onclick="disappear()">Disappear</button>
+
+    <script>
+        function moveCar() {
+            const carImage = document.getElementById('carimage');
+            carImage.style.left = '200px';
+            carImage.style.top = '500px';
+        }
+
+       
+        function doMove() {
+            let pos = 0;
+            const carImage = document.getElementById('carimage');
+            const id = setInterval(frame, 10);
+            function frame() {
+                if (pos >= window.innerWidth - carImage.width) {
+                    pos = 0;
+                } else {
+                    pos += 2;
+                    carImage.style.left = pos + 'px';
+                }
+            }
+        }
+
+     
+        function fadeOut() {
+            const carImage = document.getElementById('carimage');
+            let opacity = 1;
+            const fadeEffect = setInterval(function () {
+                if (opacity <= 0) {
+                    clearInterval(fadeEffect);
+                } else {
+                    opacity -= 0.05;
+                    carImage.style.opacity = opacity;
+                }
+            }, 100);
+        }
+
+      
+        function disappear() {
+            const carImage = document.getElementById('carimage');
+            carImage.remove();
+        }
+    </script>
+
+</body>
+</html>

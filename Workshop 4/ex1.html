@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM Manipulation Exercises</title>
+    <style>
+        .italic-text {
+            font-style: italic;
+        }
+        body.modified-bg {
+            background-color: lightblue;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="workshop-heading">Workshop 4</h1>
+    <h2 id="exercise2-heading">Exercise 1</h2>
+    <p>Paragraph 1</p>
+    <p>Paragraph 2</p>
+    <p>Paragraph 3</p>
+    <p>Paragraph 4</p>
+
+
+    <button onclick="modifyHeading()">Button 1: Modify Heading</button>
+    <button onclick="modifyStyle()">Button 2: Modify Style</button>
+    <button onclick="appendTextAndImage()">Button 3: Append Text and Image</button>
+
+    <script>
+        
+        function modifyHeading() {
+            document.getElementById('workshop-heading').innerText = "Modified Heading!";
+        }
+
+        
+        function modifyStyle() {
+            const heading = document.getElementById('exercise2-heading');
+            heading.style.fontSize = '32px';
+            heading.style.color = 'red';
+            heading.style.fontStyle = 'italic';
+            heading.style.backgroundColor = 'yellow';
+        }
+
+       
+        function appendTextAndImage() {
+            const newParagraph = document.createElement('p');
+            newParagraph.classList.add('italic-text');
+            newParagraph.innerHTML = "Lorem ipsum* dolor sit amet, consectetuer adipiscing elit. Sed posuere interdum sem. Quisque ligula eros ullamcorper quis, lacinia quis facilisis sed sapien. Mauris varius diam vitae arcu. Sed arcu lectus auctor vitae, consectetuer et venenatis eget velit. ";
+
+          
+            const fourthParagraph = document.getElementsByTagName('p')[3];
+            fourthParagraph.after(newParagraph);
+
+        
+            const newImage = document.createElement('img');
+            newImage.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAMAAAAL34HQAAAAaVBMVEUAfrv///8EgLxZq9MzmMkRh8AbjMIrlMYYisH7/f4FgbxPptBVqdIoksYOhb/R6PO+3u54u9ufzuXu9vo/nszk8fiLxOCo0+jb7fXn8/m63O3z+fyczeVFoc1uttjM5fGPxuFlsdZ0udpuM5Y1AAADYklEQVR4nO3c2bKiMBAGYAJBTkBEEMFtXOb9H3JA8bB1WyfGSadm+r/ygrI+WbIR2xN9sipJQ48kYZpU2YDiPT+oIqIR9ZGFmrLWKTWqTboesVTuU4u65KpnqYRa02epniy1pLYMk6iOlVNLxskfrDW1Y5p1y1JOPIPDpKphFdSKeYqGRd6KziOFl1EboGReRU2AUnkOtaR9Es+557BN5K2oCVBCz5U+ehQnUZxPJ14sYmrDJHFS7NtB2b4O3Hlg/eWun4psckfOWbgWo1wW1KI26U5MspfUpuZczVTNhSTvqPzDXNVMu6nvrwBSCfGbVhUDl/B+GYmWKLoksEqIGynrhLEOpKwtxlKUN72vMJagbFMXqEpQNqkpzioJWSucRdrQb1AW6QAH7HraXChV3g1j0S6FhUdYRb3oVMGsE63KW4Ht/JF8gCqhy+jAMkow74CIR1uPlPvJFQyoRY+k9VB1cGcxUxZdc3+sf1FbRvHl8nwOSuqpBYfD+WezSmVZysidlTvPL/PD92BkczndDMcgIZjxerkPHjM4ILpO+tUml9xgHcOHh4Hj3hpe1vk+HxKZERxPb58yc1ZYwF9xh1Vv3mfGLIksRXXJ3huPGLL8HF/FeOT41iYHQxa6ENVHvbNUZsTyX9xW6Jf9fdb1Ryqh9JdZTFi3n6mE2Gq3YAasEpmRA9HegmHAet0yTH6CPZZOLppvfy2xhOaEyhardpOl9HptWyxxdpOl91rEGkvvtYg1ll7T9QHW9hqUUbiQSfWygdW6uYxZ2XDlcPkCptUBmbImu35DdKFfbx+nIWs2lIpR184eC1hkDedTs0eUNdYB6oBv2G/QGXQZseBZTYYc/WWJhTTcOcLSeV9jwkKmDtgrXUusI9adIFdRZyJrwEIboho83BYL3faL3FyWWOisFNmKYomFDs9LUha6UyIiZaEPPLK7whILnTR8MYtZzGIWs5jFLGYxi1nMYhazmMUsZjGLWcxiFrP+J5YEM34lGYLHoBsbYvg7HdpTzPlsnKw24rtaMIa8agGUyNViRI6WbnK00BXp/8qRSDeLqNVOlpyLlLsF+qj/wz1LV85QCDeLPzpVlLIvldkWFqXWPNNtxHGrDGs0LsPanrCCvF2V9axobZt7iV+S8ZcfRuMSv38A9DEx6UFiE2MAAAAASUVORK5CYII=';
+            newParagraph.after(newImage);
+
+         
+            document.body.classList.add('modified-bg');
+        }
+    </script>
+
+</body>
+</html>

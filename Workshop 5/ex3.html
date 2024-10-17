@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Order</title>
+</head>
+<body>
+
+    <h1>Bulk Book Order</h1>
+    <form id="bookOrderForm">
+        Quantity: <input type="number" id="quantity" value="0" oninput="calculateTotal()"><br><br>
+        Price Per Unit: <input type="text" id="price" value="0" oninput="calculateTotal()"><br><br>
+        VAT (%): <input type="text" id="vat" value="10" oninput="calculateTotal()"><br><br>
+        Discount: <input type="text" id="discount" value="0" oninput="calculateTotal()"><br><br>
+        Shipping: <input type="text" id="shipping" value="5" oninput="calculateTotal()"><br><br>
+        Total: <input type="text" id="total" readonly><br><br>
+    </form>
+
+    <script>
+        function calculateTotal() {
+            var quantity = parseInt(document.getElementById('quantity').value);
+            var price = parseFloat(document.getElementById('price').value);
+            var vat = parseFloat(document.getElementById('vat').value);
+            var discount = parseFloat(document.getElementById('discount').value);
+            var shipping = parseFloat(document.getElementById('shipping').value);
+
+          
+            if (quantity > 100) {
+                discount *= 2;
+            }
+
+            var subtotal = quantity * price;
+            var vatAmount = subtotal * (vat / 100);
+            var discountAmount = subtotal * (discount / 100);
+            var total = subtotal + vatAmount - discountAmount + shipping;
+
+            document.getElementById('total').value = "€" + total.toFixed(2);
+        }
+
+      
+        calculateTotal();
+    </script>
+
+</body>
+</html>

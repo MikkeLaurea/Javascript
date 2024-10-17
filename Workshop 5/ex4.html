@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form with Extra Fields</title>
+</head>
+<body>
+
+    <h1>Contact Form</h1>
+    <form id="contactFormWithExtras" onsubmit="return validateForm()">
+        Email address: <input type="text" id="email" name="email"><br><br>
+        Comment: <textarea id="comment" name="comment"></textarea><br><br>
+        Preferred Contact Method:
+        <select id="contactMethod" onchange="showExtraField()">
+            <option value="">Select</option>
+            <option value="email">Email</option>
+            <option value="phone">Phone</option>
+            <option value="sms">SMS</option>
+        </select><br><br>
+
+        <div id="extraField" style="display: none;">
+            <label id="extraLabel"></label>
+            <input type="text" id="extraInput"><br><br>
+        </div>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        function showExtraField() {
+            var method = document.getElementById('contactMethod').value;
+            var extraField = document.getElementById('extraField');
+            var extraLabel = document.getElementById('extraLabel');
+            
+            if (method === 'email') {
+                extraLabel.innerText = "Email Address:";
+                extraField.style.display = 'block';
+            } else if (method === 'phone') {
+                extraLabel.innerText = "Phone Number:";
+                extraField.style.display = 'block';
+            } else if (method === 'sms') {
+                extraLabel.innerText = "SMS Number:";
+                extraField.style.display = 'block';
+            } else {
+                extraField.style.display = 'none';
+            }
+        }
+
+        function validateForm() {
+            return true;
+        }
+    </script>
+
+</body>
+</html>

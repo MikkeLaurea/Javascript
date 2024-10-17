@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membership Calculator</title>
+</head>
+<body>
+
+    <h1>Membership Calculator</h1>
+    <form id="membershipForm">
+        <label for="membershipType">Membership Type:</label>
+        <select id="membershipType" onchange="calculateCost()">
+            <option value="10">Basic - €10.00</option>
+            <option value="15">Premium - €15.00</option>
+            <option value="20">Gold - €20.00</option>
+            <option value="25">Platinum - €25.00</option>
+        </select><br><br>
+
+        <label for="years">Years:</label>
+        <input type="number" id="years" value="1" min="1" oninput="calculateCost()"><br><br>
+
+        <label for="cost">Cost:</label>
+        <input type="text" id="cost" readonly><br><br>
+
+        <span id="discountMessage"></span>
+    </form>
+
+    <script>
+        function calculateCost() {
+            var membershipType = document.getElementById('membershipType').value;
+            var years = parseInt(document.getElementById('years').value);
+            var cost = membershipType * years;
+            var discountMessage = document.getElementById('discountMessage');
+
+            discountMessage.innerText = '';
+
+            if (years > 2) {
+                var discount = cost * 0.2;
+                cost -= discount;
+                discountMessage.innerText = "You get a 20% discount!";
+            }
+
+           
+            if (years >= 5) {
+                cost -= 5;
+                discountMessage.innerText += " Plus an extra €5 discount!";
+            }
+
+            document.getElementById('cost').value = "€" + cost.toFixed(2);
+        }
+
+        calculateCost();
+    </script>
+
+</body>
+</html>

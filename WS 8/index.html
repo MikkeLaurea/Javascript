@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<HTML lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Workshop 8</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script>
+      
+      var text = '{ "employees" : [' +
+        '{ "firstName":"John" , "lastName":"Doe" },' +
+        '{ "firstName":"Anna" , "lastName":"Smith" },' +
+        '{ "firstName":"Peter" , "lastName":"Jones" } ]}';
+      var data = JSON.parse(text);
+
+      function displayNames() {
+        let output = data.employees
+          .map(emp => `${emp.firstName} ${emp.lastName}`)
+          .join('<br>');
+        document.getElementById("jsondata").innerHTML = output;
+      }
+
+      function displayAllData() {
+        let output = JSON.stringify(data, null, 2);
+        document.getElementById("jsondata").innerHTML = `<pre>${output}</pre>`;
+      }
+
+      
+      async function loadRawData() {
+        const response = await fetch(
+          "http://www.omdbapi.com/?s=star+wars&apikey=cbbc6750"
+        );
+        const rawData = await response.text();
+        document.getElementById("rawdata").innerHTML = `<pre>${rawData}</pre>`;
+      }
+
+      async function loadAndParseData() {
+        const response = await fetch(
+          "http://www.omdbapi.com/?s=star+wars&apikey=cbbc6750"
+        );
+        const parsedData = await response.json();
+        const movies = parsedData.Search.map(
+          movie =>
+            `<tr>
+              <td>${movie.Title}</td>
+              <td>${movie.Year}</td>
+              <td><img src="${movie.Poster}" alt="${movie.Title}" width="50"></td>
+            </tr>`
+        ).join("");
+        document.getElementById("rawdata").innerHTML = `
+          <table border="1">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Year</th>
+                <th>Poster</th>
+              </tr>
+            </thead>
+            <tbody>${movies}</tbody>
+          </table>`;
+      }
+
+      
+      async function getWeatherData(city) {
+        const apiKey = "d64403f8aeaa5d74b3f3545a2b096da3";
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&mode=JSON&appid=${apiKey}`;
+        const response = await fetch(url);
+        const weatherData = await response.json();
+        displayWeatherData(weatherData);
+      }
+
+      function displayWeatherData(data) {
+        const weatherInfo = `
+          <p>Temperature: ${data.main.temp} °C</p>
+          <p>Clouds: ${data.clouds.all} %</p>
+          <p>Humidity: ${data.main.humidity} %</p>
+        `;
+        document.getElementById("weatherdata").innerHTML = weatherInfo;
+      }
+
+      function searchWeather() {
+        const city = document.getElementById("citysearch").value;
+        getWeatherData(city);
+      }
+
+      function handleCityChange() {
+        const selectedCity = document.getElementById("city").value;
+        getWeatherData(selectedCity);
+      }
+    </script>
+  </head>
+  <body class="ws8">
+    <h1>Workshop 8: Parsing JSON/XML with AJAX</h1>
+    <hr />
+    <h2>Exercise 1: JSON Basics</h2>
+    <p>
+      <button onclick="displayNames()">Display the first and lastname only</button>
+      <button onclick="displayAllData()">Display all data</button>
+    </p>
+    <div id="jsondata">JSON data goes here.</div>
+    <hr />
+    <h2>Exercise 2: Parsing JSON from web</h2>
+    <p>
+      <button onclick="loadRawData()">Load raw data</button>
+      <button onclick="loadAndParseData()">Load and parse the data</button>
+    </p>
+    <div id="rawdata">Raw data goes here.</div>
+    <hr />
+    <h2>Exercise 3: Real Life Challenge: OpenWeatherMap API</h2>
+    <p>Select a city from the list:</p>
+    <select name="mySelect" id="city" onchange="handleCityChange()">
+      <option value="Helsinki">Helsinki</option>
+      <option value="Stockholm">Stockholm</option>
+      <option value="Rome">Rome</option>
+      <option value="New York">New York</option>
+    </select>
+    <p>
+      Or type in a search query: <input id="citysearch" />
+      <button id="search" onclick="searchWeather()">Search</button>
+    </p>
+    <div id="weatherdata">Weather data goes here.</div>
+  </body>
+</HTML>

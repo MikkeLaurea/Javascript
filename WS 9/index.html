@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Workshop 9</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.js"
+            integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
+            crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #ajax {
+            border: 1px solid black;
+            width: 400px;
+            height: 200px;
+            overflow: auto;
+            padding: 10px;
+        }
+
+        #content {
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Workshop 9: Using jQuery</h1>
+    <hr />
+
+    <h2>Exercise 1: Adding jQuery to document</h2>
+    <p>
+        jQuery has been added to this document 
+        <pre>
+        <script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
+        </pre>
+        Test that it works by opening the browser console and typing <code>$</code> (Works).
+    </p>
+    <hr />
+
+    <h2>Exercise 2: Basic DOM Scripting</h2>
+    <p>Answers:</p>
+    <ul>
+        <li>Find a reference to all H3 tags: <code>$("h3")</code></li>
+        <li>Find a reference to a div with id='contant' and replace contents: <code>$("#contant").text("Your new content")</code></li>
+        <li>Find a reference to the img and replace the src attribute: <code>$("img").attr("src", "new_image_url")</code></li>
+        <li>Find an element with class sideBarListBox and show/hide: <code>$(".sideBarListBox").toggle()</code></li>
+        <li>Find any li element containing "Lorem" and add underline: <code>$("li:contains('Lorem')").css("text-decoration", "underline")</code></li>
+        <li>Find all anchor tags within class sideBarListBox and apply CSS: <code>$(".sideBarListBox a").css({"color": "red", "font-weight": "bold"})</code></li>
+    </ul>
+    <hr />
+
+    <h2>Exercise 3: Effects and Animation</h2>
+    <p>Click the buttons below to see various effects:</p>
+    <div id="content">
+        <h1>Main Content</h1>
+        <p>This is the main content area. Use the buttons to see jQuery effects in action.</p>
+    </div>
+    <button id="fadeIn">Fade In</button>
+    <button id="fadeOut">Fade Out</button>
+    <button id="slideUp">Slide Up</button>
+    <button id="slideDown">Slide Down</button>
+    <button id="animate">Animate</button>
+    <script>
+        $(document).ready(function () {
+          
+            $("#fadeIn").click(function () {
+                $("#content").fadeIn();
+            });
+
+            $("#fadeOut").click(function () {
+                $("#content").fadeOut();
+            });
+
+         
+            $("#slideUp").click(function () {
+                $("#content").slideUp();
+            });
+
+            $("#slideDown").click(function () {
+                $("#content").slideDown();
+            });
+
+         
+            $("#animate").click(function () {
+                $("#content").animate({
+                    width: "toggle",
+                    opacity: 0.5,
+                }, 1000).animate({
+                    opacity: 1,
+                    width: "100%",
+                }, 1000);
+            });
+        });
+    </script>
+    <hr />
+
+    <h2>Exercise 4: Ajax</h2>
+    <p>Select an option from the dropdown menu to load content:</p>
+    <p>
+        <label for="contentSelect">Load Content:</label>
+        <select id="contentSelect">
+            <option value="">-- Select --</option>
+            <option value="xml">XML Content (Top Stories)</option>
+            <option value="github">Meijastiina GitHub</option>
+        </select>
+    </p>
+    <div id="ajax">
+      
+    </div>
+    <script>
+        $(document).ready(function () {
+            // Handle dropdown selection
+            $("#contentSelect").change(function () {
+                const selectedValue = $(this).val();
+                const ajaxDiv = $("#ajax");
+
+                if (selectedValue === "xml") {
+                    ajaxDiv.text("Loading XML content...");
+                    ajaxDiv.load("https://meijastiina.github.io/news_rss_topstories.xml", function (response, status) {
+                        if (status === "error") {
+                            ajaxDiv.text("Failed to load XML content.");
+                        }
+                    });
+                } else if (selectedValue === "github") {
+                    ajaxDiv.text("Loading GitHub content...");
+                    ajaxDiv.load("https://meijastiina.github.io", function (response, status) {
+                        if (status === "error") {
+                            ajaxDiv.text("Failed to load GitHub content.");
+                        }
+                    });
+                } else {
+                    ajaxDiv.empty(); 
+                }
+            });
+        });
+    </script>
+</body>
+</html>

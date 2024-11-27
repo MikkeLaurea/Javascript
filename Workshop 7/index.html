@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<HTML lang="en">
+  <head>
+    <title>Workshop 7</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+  <body class="ws7">
+    <h1>Workshop 7: Using AJAX and parsing XML</h1>
+    <hr />
+    <p>
+      AJAX stands for Active JavaScript with XML and basically means a way to request a script to fetch data from a file or an API and return it back to the script. Then we can utilize the data either by injecting it into the page as such or by first parsing the data (using loops) and then format the data the way we like.
+      Chrome Developer Tools offer nice way of tracking AJAX calls as well. Press F12 to open the tools and click Network-tab. Here you are able to see the requests and responses in action.
+    </p>
+    <p>NOTE: Ajax calls will cause security issues in many cases. If you encounter those, I recommend signing up for a free account in Codeanywhere.com and doing these exercises there. Copy this exercise file there and start doing the exercises.</p>
+    <hr/>
+    <h2>Exercise 1: Parsing XML data </h2>
+    <p>Write a function called `parseData()`, which will output the `quote` and `author` tags from XML when the button is clicked.</p>
+    <input type="button" name="Fetch" id="Fetch" value="Fetch Quotes" onclick="parseData()">
+    <div id="output"></div>
+    
+    <pre style="display:none;">
+      <quotes>
+        <quote>I'm not concerned about all hell breaking loose, but that a PART of hell will break loose... it'll be much harder to detect.</quote>
+        <length>124</length>
+        <author>George Carlin</author>
+      </quotes>
+      <quotes>
+        <quote>The biggest problem with every art is by the use of appearance to create a loftier reality.</quote>
+        <author>Johann Wolfgang von Goethe</author>
+      </quotes>
+    </pre>
+
+    <script>
+      function parseData() {
+        const xmlData = document.getElementsByTagName('quotes');
+        let output = "";
+        for (let i = 0; i < xmlData.length; i++) {
+          const quote = xmlData[i].getElementsByTagName('quote')[0].textContent;
+          const author = xmlData[i].getElementsByTagName('author')[0].textContent;
+          output += `<p><strong>Quote:</strong> ${quote}<br><strong>Author:</strong> ${author}</p>`;
+        }
+        document.getElementById("output").innerHTML = output;
+      }
+    </script>
+
+    <hr/>
+    <h2>Exercise 2: AJAX call to an XML file </h2>
+    <input type="button" name="Fetch2" id="Fetch2" value="Fetch Quotes File" onclick="loadXMLFile()">
+    <div id="quotes"></div>
+
+    <script>
+      function loadXMLFile() {
+        const xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET", "http://quotes.rest/qod.xml", true);
+        xmlhttp.onreadystatechange = function () {
+          if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            document.getElementById("quotes").textContent = xmlhttp.responseText;
+          }
+        };
+        xmlhttp.send();
+      }
+    </script>
+
+    <hr/>
+    <h2>Exercise 3: Parsing the XML</h2>
+    <input type="button" name="Fetch3" id="Fetch3" value="Parse Quotes File" onclick="loadAndParseXML()">
+    <div id="tabledata">
+      <table>
+        <thead>
+          <tr>
+            <th>Quote</th>
+            <th>Author</th>
+          </tr>
+        </thead>
+        <tbody id="parsedTable">
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      function loadAndParseXML() {
+        const xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET", "http://quotes.rest/qod.xml", true);
+        xmlhttp.onreadystatechange = function () {
+          if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(xmlhttp.responseText, "text/xml");
+            const quotes = xmlDoc.getElementsByTagName("quotes");
+            let tableRows = "";
+            for (let i = 0; i < quotes.length; i++) {
+              const quote = quotes[i].getElementsByTagName("quote")[0].textContent;
+              const author = quotes[i].getElementsByTagName("author")[0].textContent;
+              tableRows += `<tr><td>${quote}</td><td>${author}</td></tr>`;
+            }
+            document.getElementById("parsedTable").innerHTML = tableRows;
+          }
+        };
+        xmlhttp.send();
+      }
+    </script>
+
+    <hr/>
+    <h2>Exercise 4: AJAX call to a live newsfeed</h2>
+    <input type="button" name="Fetch3b" id="Fetch3b" value="Load YAHOO Newsfeed" onclick="loadAndParseNews('https://meijastiina.github.io/news_rss_topstories.xml')">
+    <input type="button" name="Fetch3c" id="Fetch3c" value="Load Iltalehti Newsfeed" onclick="loadAndParseNews('http://www.iltalehti.fi/rss/uutiset.xml')">
+    <div id="newsfeed">
+      <ul id="newsList"></ul>
+    </div>
+
+    <script>
+      function loadAndParseNews(url) {
+        const xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET", url, true);
+        xmlhttp.onreadystatechange = function () {
+          if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(xmlhttp.responseText, "text/xml");
+            const items = xmlDoc.getElementsByTagName("item");
+            let newsList = "";
+            for (let i = 0; i < items.length; i++) {
+              const title = items[i].getElementsByTagName("title")[0].textContent;
+              const link = items[i].getElementsByTagName("link")[0].textContent;
+              newsList += `<li><a href="${link}" target="_blank">${title}</a></li>`;
+            }
+            document.getElementById("newsList").innerHTML = newsList;
+          }
+        };
+        xmlhttp.send();
+      }
+    </script>
+  </body>
+</html>
